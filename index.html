@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Factory Helper</title>
+  <meta name="description" content="제조현장 설비 문제를 AI로 분석하는 문제해결 도우미" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="#home" class="brand">AI Factory Helper</a>
+      <nav aria-label="주요 메뉴">
+        <a href="#home">HOME</a>
+        <a href="#troubleshooting">AI 문제해결</a>
+        <a href="#result">분석결과</a>
+        <a href="#about">ABOUT</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">제조현장 AI 문제해결 PoC</p>
+          <h1>제조현장의 문제를<br />AI와 함께 해결하세요.</h1>
+          <p class="lead">
+            설비명, 알람코드, 문제 증상을 입력하면 AI가
+            예상 원인, 우선 확인 사항, 권장 조치 방법을 정리해 제공합니다.
+          </p>
+          <a class="btn primary" href="#troubleshooting">AI 문제해결 시작하기</a>
+        </div>
+        <div class="info-card">
+          <h2>이 서비스가 제공하는 것</h2>
+          <ul>
+            <li>문제 상황 요약</li>
+            <li>예상 원인</li>
+            <li>우선 확인 사항</li>
+            <li>권장 조치 방법</li>
+            <li>주의사항</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="troubleshooting" class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">AI TROUBLESHOOTING</p>
+          <h2>설비 문제를 입력하세요</h2>
+          <p>문제 증상은 필수 입력 항목입니다.</p>
+        </div>
+
+        <form id="trouble-form" class="form-card">
+          <div class="form-grid">
+            <label>
+              설비명
+              <input id="equipmentName" name="equipmentName" type="text" placeholder="예: CNC-05" />
+            </label>
+
+            <label>
+              설비 종류
+              <input id="equipmentType" name="equipmentType" type="text" placeholder="예: CNC 선반" />
+            </label>
+
+            <label>
+              알람코드
+              <input id="alarmCode" name="alarmCode" type="text" placeholder="예: 2045" />
+            </label>
+
+            <label class="full">
+              문제 증상 <span class="required">*</span>
+              <textarea id="symptom" name="symptom" rows="5" placeholder="예: Tool 교환 직후 설비가 정지했습니다." required></textarea>
+            </label>
+
+            <label class="full">
+              추가 상황
+              <textarea id="context" name="context" rows="4" placeholder="예: 가공 중 발생, Tool 교환 직후 발생 등"></textarea>
+            </label>
+          </div>
+
+          <div id="form-message" class="message" role="alert" aria-live="polite"></div>
+
+          <div class="actions">
+            <button id="analyze-btn" class="btn primary" type="submit">AI 문제 분석하기</button>
+            <button class="btn secondary" type="reset">입력 초기화</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="result" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">RESULT</p>
+          <h2>AI 분석 결과</h2>
+          <p>분석 후 아래 영역에 결과가 표시됩니다.</p>
+        </div>
+
+        <article id="result-card" class="result-card empty">
+          <div id="loading" class="loading hidden" aria-live="polite">
+            <div class="spinner" aria-hidden="true"></div>
+            <p>AI가 문제를 분석하고 있습니다. 잠시만 기다려주세요.</p>
+          </div>
+          <div id="result-content">
+            <p class="placeholder">아직 분석 결과가 없습니다.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">ABOUT</p>
+          <h2>서비스 안내</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="info-card">
+            <h3>목적</h3>
+            <p>
+              제조현장 작업자가 설비 이상 발생 시 초기 확인 순서와
+              문제해결 방향을 빠르게 파악할 수 있도록 지원합니다.
+            </p>
+          </div>
+          <div class="info-card">
+            <h3>기술 구조</h3>
+            <p>
+              HTML/CSS/JavaScript 프론트엔드에서 Python 기반 Vercel
+              Serverless Function을 호출하고, 백엔드에서 AI API를 연동합니다.
+            </p>
+          </div>
+          <div class="info-card">
+            <h3>주의사항</h3>
+            <p>
+              AI 분석 결과는 참고용입니다. 실제 작업에서는 해당 설비의
+              매뉴얼, 작업표준서, 안전절차와 사업장 규정을 우선 적용하세요.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>AI Factory Helper · 제조업 문제해결 AI 도우미 PoC</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
