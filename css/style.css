@@ -236,9 +236,29 @@ button:disabled {
   font-weight: 700;
 }
 
+.message.status-success {
+  color: #087443;
+}
+
+.message.status-loading {
+  color: var(--muted);
+}
+
 .result-card {
   min-height: 280px;
   padding: 30px;
+}
+
+.result-card.status-success {
+  border-color: #83c9a8;
+}
+
+.result-card.status-error {
+  border-color: #e3a19b;
+}
+
+.retry-btn {
+  margin-top: 20px;
 }
 
 .result-card.empty {

@@ -1,10 +1,14 @@
 import os
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from openai import OpenAI
+from dotenv import load_dotenv
+
+
+load_dotenv(".env.local")
 
 
 # ---------------------------------------------------------
@@ -38,11 +42,16 @@ app.mount("/js", StaticFiles(directory="js"), name="js")
 # 사용자 입력 데이터 모델
 # ---------------------------------------------------------
 class TroubleRequest(BaseModel):
-    equipmentName: str = ""
-    equipmentType: str = ""
-    alarmCode: str = ""
-    symptom: str = ""
-    context: str = ""
+    equipmentName: str = Field(default="", max_length=100)
+    equipmentType: str = Field(default="", max_length=100)
+    alarmCode: str = Field(default="", max_length=50)
+    symptom: str = Field(default="", max_length=2000)
+    context: str = Field(default="", max_length=2000)
+
+
+class AnalysisResponse(BaseModel):
+    success: bool = True
+    result: str = Field(min_length=1)
 
 
 # ---------------------------------------------------------
@@ -84,6 +93,11 @@ def home():
     return FileResponse("index.html")
 
 
+@app.get("/favicon.ico")
+def favicon():
+    return Response(status_code=204)
+
+
 # ---------------------------------------------------------
 # 서버 상태 확인용 API
 # ---------------------------------------------------------
@@ -98,7 +112,7 @@ def health():
 # ---------------------------------------------------------
 # AI 문제 분석 API
 # ---------------------------------------------------------
-@app.post("/api/ai")
+@app.post("/api/ai", response_model=AnalysisResponse)
 def analyze_problem(data: TroubleRequest):
 
     # 1. 필수 입력 확인
@@ -115,8 +129,8 @@ def analyze_problem(data: TroubleRequest):
 
     if not api_key:
         raise HTTPException(
-            status_code=500,
-            detail="OPENAI_API_KEY 환경변수가 설정되어 있지 않습니다."
+            status_code=503,
+            detail="서버에 OPENAI_API_KEY 환경변수가 설정되어 있지 않습니다. 관리자에게 문의해주세요."
         )
 
     # 3. 사용자 입력 정리
