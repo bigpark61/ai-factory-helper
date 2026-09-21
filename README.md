@@ -63,6 +63,9 @@ python -m uvicorn api.index:app --reload
 
 배포 URL을 확인하려면 Vercel 프로젝트의 Settings > Domains에서 기본 도메인을 복사해 위 제출 링크에 기록합니다.
 
+https://ai-factory-helper.vercel.app
+
+
 ## API 계약
 
 `POST /api/ai`의 `symptom`은 필수입니다. `equipmentName`/`equipmentType`은 100자,

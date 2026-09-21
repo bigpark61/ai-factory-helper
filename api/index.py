@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, Response
@@ -9,6 +10,9 @@ from dotenv import load_dotenv
 
 
 load_dotenv(".env.local")
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 # ---------------------------------------------------------
@@ -34,8 +38,8 @@ app = FastAPI(
 # └─ api/
 #    └─ index.py
 # ---------------------------------------------------------
-app.mount("/css", StaticFiles(directory="css"), name="css")
-app.mount("/js", StaticFiles(directory="js"), name="js")
+app.mount("/css", StaticFiles(directory=PROJECT_ROOT / "css"), name="css")
+app.mount("/js", StaticFiles(directory=PROJECT_ROOT / "js"), name="js")
 
 
 # ---------------------------------------------------------
@@ -90,7 +94,7 @@ SYSTEM_PROMPT = """
 # ---------------------------------------------------------
 @app.get("/")
 def home():
-    return FileResponse("index.html")
+    return FileResponse(PROJECT_ROOT / "index.html")
 
 
 @app.get("/favicon.ico")
